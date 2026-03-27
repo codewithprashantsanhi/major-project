@@ -1,0 +1,23 @@
+{
+  "RELIANCE.NS": {
+    "news": [
+      {"title": "Reliance Industries Q2 Results Beat Estimates", "text": "Reliance Industries reported better-than-expected Q2 results driving stock higher", "timestamp": "2024-10-03T08:00:00", "source": "Yahoo Finance"},
+      {"title": "RIL Stock Targets Raised by Analysts", "text": "Post earnings analysts raise PT to ₹3200", "timestamp": "2024-10-03T09:30:00", "source": "Economic Times"},
+      {"title": "Reliance Jio subscriber growth accelerates", "text": "Jio adds 12M subscribers QoQ", "timestamp": "2024-10-03T12:00:00", "source": "Business Standard"}
+    ],
+    "social": [
+      {"text": "Reliance smashing it again! #RIL #Nifty bullish", "timestamp": "2024-10-03T10:15:00"},
+      {"text": "RIL breakout confirmed. Target 3050 next week", "timestamp": "2024-10-03T11:20:00"},
+      {"text": "Reliance volume explosion. Bullish setup complete", "timestamp": "2024-10-03T14:05:00"},
+      {"text": "RIL above 3000 finally! Long term hold", "timestamp": "2024-10-03T15:30:00"}
+    ]
+  },
+  "TCS.NS": {
+    "news": [
+      {"title": "TCS wins $1B deal from European bank", "text": "Major digital transformation contract", "timestamp": "2024-10-02T09:00:00", "source": "Yahoo Finance"}
+    ],
+    "social": [
+      {"text": "TCS steady climber. Safe bet #ITstocks", "timestamp": "2024-10-02T10:00:00"}
+    ]
+  }
+}

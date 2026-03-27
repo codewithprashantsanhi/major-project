@@ -14,6 +14,37 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     # Normalize features
     return (df - df.mean()) / df.std()
 
+def add_sentiment_embeddings(df: pd.DataFrame, symbol: str) -> pd.DataFrame:
+    """Add sentiment embeddings from news/social media using FinBERT"""
+    from sentiment_embeddings import aggregate_embeddings
+    from news_social_fetcher import fetch_news_social
+    import numpy as np
+    
+    df = df.copy()
+    n_rows = len(df)
+    
+    # Simplified: Use recent data for all rows (production: date-specific)
+    data = fetch_news_social(symbol)
+    all_texts = data['news'] + data['social']
+    
+    if not all_texts:
+        # Mock neutral embedding
+        emb_cols = ['sent_emb_' + str(i) for i in range(10)]
+        df[emb_cols] = 0.0
+        df['sent_score'] = 0.0
+        return df
+    
+    agg = aggregate_embeddings(all_texts)
+    embedding = agg['embedding'][:10]  # Top 10 dims
+    
+    # Repeat for all rows
+    for i in range(10):
+        df[f'sent_emb_{i}'] = embedding[i]
+    df['sent_score'] = agg['sentiment_score']
+    
+    print(f"➕ Added {len(embedding)+1} sentiment features")
+    return df
+
 def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
     """Add advanced technical indicators for better predictions"""
     df = df.copy()
@@ -81,7 +112,7 @@ def create_sequences(data, seq_length, target_col_idx=3):
         y.append(data[i+seq_length, target_col_idx])  # Predict Close price
     return np.array(X), np.array(y)
 
-def load_and_preprocess_data(symbol, start_date, end_date, sequence_length, use_technical_indicators=True):
+def load_and_preprocess_data(symbol, start_date, end_date, sequence_length, use_technical_indicators=True, use_sentiment=True):
     """Load, preprocess, and split data with optional technical indicators"""
     # Download data
     df = download_data(symbol, start_date, end_date)
@@ -91,8 +122,12 @@ def load_and_preprocess_data(symbol, start_date, end_date, sequence_length, use_
         df = add_technical_indicators(df)
         print(f"✨ Added technical indicators. Features: {df.shape[1]}")
     
-    # Find Close column index
-    close_idx = df.columns.get_loc('Close')
+    # Add sentiment embeddings (new!)
+    df = add_sentiment_embeddings(df, symbol)
+    print(f"🎉 Added sentiment embeddings. Total features: {df.shape[1]}")
+    
+    # Find Close column index (now fixed at 3, before new cols)
+    close_idx = 3  # Close is always column 3 (OHLCV order)
     
     # Scale data
     scaler = MinMaxScaler()

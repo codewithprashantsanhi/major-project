@@ -23,6 +23,6 @@ transformers>=4.35.0
 huggingface-hub>=0.17.0
 python-dotenv>=1.0.0
 # Optional: For Ollama support (uncomment if using local LLMs)
-# ollama>=0.1.0
+ollama>=0.1.0
 # Optional: For Anthropic Claude support (uncomment if using)
 # anthropic>=0.7.0
