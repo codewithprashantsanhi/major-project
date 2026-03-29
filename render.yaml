@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: stocksense-ai
+    name: major-project-ai
     runtime: python
     region: oregon
     plan: free
@@ -8,7 +8,7 @@ services:
     startCommand: uvicorn serve:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.0
+        value: 3.11
       - key: PORT
         value: 8000
     healthCheckPath: /health
